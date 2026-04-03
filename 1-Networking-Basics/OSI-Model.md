@@ -82,7 +82,7 @@ This layer deals with actual transmission of data as bits. It includes cables, s
 ---
 ## 🖼️ OSI Model Diagram
 
-![OSI Model](../images/osi-model.png)
+![OSI Model](../images/osi-model.jpg)
 
 ---
 ## 🔥 Key Points
