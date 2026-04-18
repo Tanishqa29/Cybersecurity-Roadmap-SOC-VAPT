@@ -243,13 +243,14 @@ Login with `admin/admin`
 # 🔹 PART 2: RAPID FIRE 
 
 🔐 **1. Authentication Bypass**
-Q: What is authentication bypass?
+
+**Q: What is authentication bypass?**
 👉 It is a vulnerability where an attacker gains access without valid credentials due to broken login logic.
 
-Q: How does it happen?
+**Q: How does it happen?**
 👉 Due to missing server-side validation, weak OTP checks, or trusting client-side logic.
 
-Q: Impact?
+**Q: Impact?**
 👉 Unauthorized login to user or admin accounts.
 
 ---
