@@ -240,7 +240,7 @@ Login with `admin/admin`
 
 ---
 
-# 🔹 PART 2: RAPID FIRE Q&A
+# 🔹 PART 2: RAPID FIRE 
 
 🔐 **1. Authentication Bypass**
 Q: What is authentication bypass?
