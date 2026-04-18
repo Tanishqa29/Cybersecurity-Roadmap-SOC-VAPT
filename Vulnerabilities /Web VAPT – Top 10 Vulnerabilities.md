@@ -560,8 +560,6 @@ Login successful.
 💥 Impact  
 Full admin control → data modification, deletion.
 
-🎯 Lesson  
-👉 Always change defaults and harden configs.
 ---
 
 # 🔥 FINAL NOTE
