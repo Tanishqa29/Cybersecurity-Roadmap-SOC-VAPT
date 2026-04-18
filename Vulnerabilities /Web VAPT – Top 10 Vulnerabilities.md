@@ -255,7 +255,8 @@ Login with `admin/admin`
 
 ---
 
-🧾 **2. Broken Access Control**
+## **2. Broken Access Control**
+
 **Q: What is broken access control?**
 👉 When users can perform actions or access data beyond their privilege level.
 
@@ -267,7 +268,8 @@ Login with `admin/admin`
 
 ---
 
-🔓 **3. IDOR**
+## **3. IDOR**
+
 **Q: What is IDOR?**
 👉 A vulnerability where object references (like IDs) are exposed without authorization checks.
 
@@ -279,7 +281,8 @@ Login with `admin/admin`
 
 ---
 
-🧑‍💻 **4. SQL Injection**
+## **4. SQL Injection**
+
 **Q: What is SQL Injection?**
 👉 Injection of malicious SQL queries into input fields.
 
@@ -291,7 +294,8 @@ Login with `admin/admin`
 
 ---
 
-🌐 **5. XSS**
+## **5. XSS**
+
 **Q: What is XSS?**
 👉 Injection of malicious JavaScript into web pages viewed by users.
 
@@ -303,7 +307,8 @@ Login with `admin/admin`
 
 ---
 
-🔁 **6. CSRF**
+## **6. CSRF**
+
 **Q: What is CSRF?**
 👉 Trick a logged-in user into performing unwanted actions.
 
@@ -315,7 +320,8 @@ Login with `admin/admin`
 
 ---
 
-📂** 7. File Upload Vulnerability**
+## ** 7. File Upload Vulnerability**
+
 **Q: What is file upload vulnerability?**
 👉 When system allows unsafe files to be uploaded without proper validation.
 
@@ -327,7 +333,8 @@ Login with `admin/admin`
 
 ---
 
-🌍 **8. SSRF**
+## **8. SSRF**
+
 **Q: What is SSRF?**
 👉 Server is tricked into making requests to internal or external systems.
 
@@ -339,7 +346,8 @@ Login with `admin/admin`
 
 ---
 
-🔎 **9. Information Disclosure**
+## **9. Information Disclosure**
+
 **Q: What is information disclosure?**
 👉 Sensitive data is exposed unintentionally.
 
@@ -351,7 +359,8 @@ Login with `admin/admin`
 
 ---
 
-⚙️ **10. Security Misconfiguration**
+## **10. Security Misconfiguration**
+
 **Q: What is security misconfiguration?**
 👉 Improperly configured security settings in application or server.
 
@@ -368,7 +377,7 @@ Login with `admin/admin`
 
 ## 🔐 1. Authentication Bypass
 
-🧠 Scenario  
+** Scenario **  
 A startup had OTP-based login for users.
 
 ⚔️ Attack  
